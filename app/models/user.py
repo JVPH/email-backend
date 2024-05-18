@@ -13,6 +13,7 @@ class UserModel(db.Model):
         sent_emails (relationship): Relationship attribute defining emails sent by the user.
         received_emails (relationship): Relationship attribute defining emails received by the user.
     """
+
     __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -20,10 +21,18 @@ class UserModel(db.Model):
     u_email = db.Column(db.String(), nullable=False, unique=True)
     password = db.Column(db.String(), nullable=False)
 
-    sent_emails = db.relationship("EmailModel", back_populates="sender", foreign_keys="[EmailModel.sender_id]",
-                                  lazy="dynamic")
-    received_emails = db.relationship("EmailModel", back_populates="recipient",
-                                      foreign_keys="[EmailModel.recipient_id]", lazy="dynamic")
+    sent_emails = db.relationship(
+        "EmailModel",
+        back_populates="sender",
+        foreign_keys="[EmailModel.sender_id]",
+        lazy="dynamic",
+    )
+    received_emails = db.relationship(
+        "EmailModel",
+        back_populates="recipient",
+        foreign_keys="[EmailModel.recipient_id]",
+        lazy="dynamic",
+    )
 
     @classmethod
     def find_by_u_email(cls, email):
