@@ -45,11 +45,15 @@ def test_user_registration_with_valid_credentials(client):
         client: The test client for making requests to the app.
     """
     response = client.post(
-        '/api/register',
-        json={'name': 'Test User', 'u_email': 'test@example.com', 'password': 'test123'}
+        "/api/register",
+        json={
+            "name": "Test User",
+            "u_email": "test@example.com",
+            "password": "test123",
+        },
     )
     assert response.status_code == 201
-    assert 'message' in response.json
+    assert "message" in response.json
 
 
 def test_duplicate_user_registration(client):
@@ -60,16 +64,24 @@ def test_duplicate_user_registration(client):
         client: The test client for making requests to the app.
     """
     client.post(
-        '/api/register',
-        json={'name': 'Test User', 'u_email': 'test@example.com', 'password': 'test123'}
+        "/api/register",
+        json={
+            "name": "Test User",
+            "u_email": "test@example.com",
+            "password": "test123",
+        },
     )
     response = client.post(
-        '/api/register',
-        json={'name': 'Test User', 'u_email': 'test@example.com', 'password': 'test123'}
+        "/api/register",
+        json={
+            "name": "Test User",
+            "u_email": "test@example.com",
+            "password": "test123",
+        },
     )
     assert response.status_code == 400
-    assert 'message' in response.json
-    assert response.json['message'] == 'Username already exists.'
+    assert "message" in response.json
+    assert response.json["message"] == "Username already exists."
 
 
 def test_user_login_with_valid_credentials(client):
@@ -80,16 +92,19 @@ def test_user_login_with_valid_credentials(client):
         client: The test client for making requests to the app.
     """
     client.post(
-        '/api/register',
-        json={'name': 'Test User', 'u_email': 'test@example.com', 'password': 'test123'}
+        "/api/register",
+        json={
+            "name": "Test User",
+            "u_email": "test@example.com",
+            "password": "test123",
+        },
     )
     # Login with correct credentials
     response = client.post(
-        '/api/login',
-        json={'u_email': 'test@example.com', 'password': 'test123'}
+        "/api/login", json={"u_email": "test@example.com", "password": "test123"}
     )
     assert response.status_code == 200
-    assert 'access_token' in response.json
+    assert "access_token" in response.json
 
 
 def test_login_with_invalid_credentials(client):
@@ -100,9 +115,8 @@ def test_login_with_invalid_credentials(client):
         client: The test client for making requests to the app.
     """
     response = client.post(
-        '/api/login',
-        json={'u_email': 'test@example.com', 'password': 'wrongpassword'}
+        "/api/login", json={"u_email": "test@example.com", "password": "wrongpassword"}
     )
     assert response.status_code == 401
-    assert 'message' in response.json
-    assert response.json['message'] == 'Invalid credentials.'
+    assert "message" in response.json
+    assert response.json["message"] == "Invalid credentials."

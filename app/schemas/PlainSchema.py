@@ -1,5 +1,6 @@
 from marshmallow import Schema, fields
 
+
 class PlainUserSchema(Schema):
     """
     Schema for representing plain user data.
@@ -9,11 +10,13 @@ class PlainUserSchema(Schema):
         u_email (str): The email of the user.
         password (str): The password of the user.
     """
-    #id = fields.Int(dump_only=True)
+
+    # id = fields.Int(dump_only=True)
     name = fields.Str(required=True)
     u_email = fields.Email(required=True)
     # Never return password
     password = fields.Str(required=True, load_only=True)
+
 
 class PlainEmailSchema(Schema):
     """
@@ -25,6 +28,7 @@ class PlainEmailSchema(Schema):
         body (str): The body of the email.
         timestamp (datetime): The timestamp of the email.
     """
+
     id = fields.Int(dump_only=True)
     subject = fields.Str(required=True)
     body = fields.Str(required=True)

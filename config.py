@@ -29,10 +29,10 @@ class TestingConfig(Config):
 
 
 def get_config():
-    env = os.getenv('FLASK_ENV', 'development')
-    if env == 'production':
+    env = os.getenv("FLASK_ENV", "development")
+    if env == "production":
         return ProductionConfig()
-    elif env == 'testing':
+    elif env == "testing":
         return TestingConfig()
     else:
         return DevelopmentConfig()

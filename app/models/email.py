@@ -15,16 +15,25 @@ class EmailModel(db.Model):
         sender (relationship): Relationship attribute defining the sender of the email.
         recipient (relationship): Relationship attribute defining the recipient of the email.
     """
+
     __tablename__ = "emails"
 
     id = db.Column(db.Integer, primary_key=True)
     subject = db.Column(db.Text, nullable=False)
     body = db.Column(db.Text, nullable=False)
     timestamp = db.Column(db.TIMESTAMP, nullable=False)
-    sender_id = db.Column(db.Integer, db.ForeignKey("users.id"), unique=False, nullable=False)
-    recipient_id = db.Column(db.Integer, db.ForeignKey("users.id"), unique=False, nullable=False)
-    sender = db.relationship("UserModel", foreign_keys=[sender_id], back_populates="sent_emails")
-    recipient = db.relationship("UserModel", foreign_keys=[recipient_id], back_populates="received_emails")
+    sender_id = db.Column(
+        db.Integer, db.ForeignKey("users.id"), unique=False, nullable=False
+    )
+    recipient_id = db.Column(
+        db.Integer, db.ForeignKey("users.id"), unique=False, nullable=False
+    )
+    sender = db.relationship(
+        "UserModel", foreign_keys=[sender_id], back_populates="sent_emails"
+    )
+    recipient = db.relationship(
+        "UserModel", foreign_keys=[recipient_id], back_populates="received_emails"
+    )
 
     def json(self):
         """
@@ -37,7 +46,7 @@ class EmailModel(db.Model):
             "id": self.id,
             "body": self.body,
             "sender": self.sender,
-            "recipient": self.recipient
+            "recipient": self.recipient,
         }
 
     @classmethod
