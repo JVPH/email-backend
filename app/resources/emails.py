@@ -48,7 +48,7 @@ class Email(MethodView):
         try:
             email.save_to_db()
             return email, 201
-        except SQLAlchemyError as e:
+        except SQLAlchemyError:
             abort(500, message="An error occurred while inserting the email.")
 
 
@@ -76,7 +76,7 @@ class Emails(MethodView):
                 recipient_id=current_user_id
             ).all()
             return received_emails
-        except SQLAlchemyError as e:
+        except SQLAlchemyError:
             abort(500, message="Failed to fetch emails.")
 
 
@@ -109,5 +109,5 @@ class EmailDetail(MethodView):
             if email is None:
                 abort(404, message="Email not found or unauthorized.")
             return email
-        except SQLAlchemyError as e:
+        except SQLAlchemyError:
             abort(500, message="Failed to fetch email details.")
